@@ -1,11 +1,19 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const cors = require('cors');
 dotenv.config({ path: './.env' });
 const app = express();
 const PORT = 9000;
 const todoRouter = require('./routes/todoRoute');
-app.use(express.json({ limit: '10kb' }));
+app.use(
+  express.json({ limit: '10kb' }),
+  cors({
+    origin: '*',
+    methods: 'GET,POST,DELETE,PUT',
+    allowedHeaders: 'Content-Type,Authorization',
+  })
+);
 
 const DB = process.env.DATABASE.replace(
   '<PASSWORD>',
